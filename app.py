@@ -2,7 +2,7 @@ import re
 import sqlite3
 from flask import Flask, render_template
 from website import create_app
-from Request import Request
+from website.Request import Request
 
 
 app = Flask(__name__)

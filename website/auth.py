@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
 import sqlite3
 
-connection = sqlite3.connect('base_test.db', check_same_thread=False)
+connection = sqlite3.connect('website/DB/base_test.db', check_same_thread=False)
 cur = connection.cursor()
 
 auth = Blueprint('auth', __name__)
