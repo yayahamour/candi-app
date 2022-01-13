@@ -16,12 +16,12 @@
         <thead>
           <tr>
             <!-- HEADER a ajouter % block ? endblock ?  -->
-            <th>Nom apprenant (non dynamique)</th>
-            <th>Entreprise</th>
-            <th>Contact</th>
-            <th>Date de candidature</th>
-            <th>Date de relance</th>
-            <th>Status</th>
+            <th>last name</th>
+            <th>first name</th>
+            <th>last name</th>
+            <th>first name</th>
+            <th>admin</th>
+            </th>
           </tr>
         </thead>
       </table>
@@ -29,13 +29,13 @@
     <div class="tbl-content">
       <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
+        {% for row in User %}
           <tr>
-            <td>XXD</td>
-            <td>ADITYA BIRLA</td>
-            <td>$1.02</td>
-            <td>-1.01</td>
-            <td>+2.36%</td>
+          {% for info in row %}
+            <td>{{ info }}</td>
+          {% endfor %}
           </tr>
+        {% endfor %}
         </tbody>
       </table>
     </div>

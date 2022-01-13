@@ -13,19 +13,16 @@ def get_db_connection():
 
 def get_post(post_id):
     conn = get_db_connection()
-    post = conn.execute('SELECT * FROM posts WHERE id = ?',
-                        (post_id,)).fetchone()
+    post = conn.execute('SELECT * FROM User WHERE id = ?',(post_id,)).fetchall()
     conn.close()
-    if post is None:
-        abort(404)
     return post
 
 
-@app.route('/board')
+@app.route('/')
 def index():
     conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM User').fetchall()
+    posts = conn.execute('SELECT last_name, first_name, telephone_number, e_mail , password FROM User').fetchall()
     conn.close()
-    return render_template('board.html', posts=posts)
+    return render_template('board.html', User=posts)
 
 
