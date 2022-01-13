@@ -1,6 +1,6 @@
 from dataclasses import dataclass 
 import sqlite3
-from flask import Flask, render_template, redirect,request
+from flask import Flask, render_template,request
 
 app = Flask(__name__)
 
@@ -51,7 +51,7 @@ class Apprenant(Users):
 
     def modify_nomination(self):
         enterprise = 1 # Enterprise_id obtained from HTML attribute
-        conn = sqlite3.connect('base_test.db')
+        conn = sqlite3.connect('website/DB/base_test.db')
         my_modification = conn.cursor()
         my_modification.execute("""SELECT name, place, contact
         FROM Candidature AS c

@@ -6,7 +6,7 @@ import sqlite3
 class Request():
     
     def get_db_connection(self):
-        return(sqlite3.connect('base_test.db'))
+        return(sqlite3.connect('website/DB/base_test.db'))
      
     def request_nomination_by_id(self, id):
         connection = self.get_db_connection()
