@@ -44,11 +44,11 @@ INSERT INTO Entreprise (name,place) VALUES
 
 
 INSERT INTO Candidature (user_id,enterprise_id,contact) VALUES
-(0,0,"John Doe"),
+(1,2,"John Doe"),
 (1,1,"Robert"),
 (5,2,""),
 (1,1,"Patricia"),
 (7,2,"Brigitte"),
 (3,3,""),
-(0,0,"Patrick"),
-(1,3,"Jules");
+(1,0,"Patrick"),
+(2,3,"Jules");

@@ -1,5 +1,8 @@
 from dataclasses import dataclass 
 import sqlite3
+from flask import Flask, render_template
+
+app = Flask(__name__)
 
 @dataclass
 class Users : 
@@ -47,13 +50,18 @@ class Apprenant(Users):
         pass 
 
     def modify_nomination(self):
+        enterprise = 1 # Enterprise_id obtained from HTML attribute
         conn = sqlite3.connect('base_test.db')
-        my_cursor = conn.cursor()
-        my_cursor.execute("""SELECT * FROM User""")
-        rows = my_cursor.fetchall()
-        for row in rows:
-            print(row)
+        my_modification = conn.cursor()
+        my_modification.execute("""SELECT name, place, contact
+        FROM Candidature AS c
+        JOIN User AS u ON u.id=c.user_id
+        JOIN Entreprise AS e ON e.id=c.enterprise_id
+        WHERE u.first_name = ? AND e.id = ?""", (self.first_name,enterprise,))
+        row = my_modification.fetchone()
+        @app.route('/')
+        def modify():
+            return render_template('Formulaire.html',row=row)
 
 rudy = Apprenant("BOUREZ","Rudy","mail@mail.com","*****","DEV IA","0606060606")
-
 rudy.modify_nomination()
