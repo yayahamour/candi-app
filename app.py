@@ -18,7 +18,7 @@ def get_post(post_id):
     return post
 
 
-@app.route('/')
+@app.route('/Board')
 def index():
     conn = get_db_connection()
     posts = conn.execute('SELECT last_name, first_name, telephone_number, e_mail , password FROM User').fetchall()

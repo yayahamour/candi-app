@@ -9,12 +9,13 @@
 </head>
 <body>
     <form>
-        {%for item in row%}
-            <input type="text" value={{item}} required></br>
+        {%for i in range(row|length)%}
+            <label for={{liste[i]}}>{{liste[i]}} : 
+                <input type="text" value={{row[i]}} name={{liste[i]}} required></br>
+            </label>
         {% endfor %}
         <input type="submit" id="modify" value="Modifier">
-        <input type="submit" id="back" value="Retour">
-
+        <button id="back">Retour</button>
     </form>
 </body>
 </html>
