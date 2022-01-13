@@ -9,19 +9,14 @@
 </head>
 <body>
   <section>
-    <!--for demo wrap-->
     <h1>{{name_table}}</h1>
     <div class="tbl-header">
       <table cellpadding="0" cellspacing="0" border="0">
         <thead>
           <tr>
-            <!-- HEADER a ajouter % block ? endblock ?  -->
-            <th>last name</th>
-            <th>first name</th>
-            <th>last name</th>
-            <th>first name</th>
-            <th>admin</th>
-            </th>
+            {% for col_name in title %}
+            <th>{{ col_name }}</th>
+            {% endfor %}
           </tr>
         </thead>
       </table>
@@ -29,7 +24,7 @@
     <div class="tbl-content">
       <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-        {% for row in User %}
+        {% for row in User%}
           <tr>
           {% for info in row %}
             <td>{{ info }}</td>
