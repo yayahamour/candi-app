@@ -23,6 +23,6 @@ def index():
     conn = get_db_connection()
     posts = conn.execute('SELECT last_name, first_name, telephone_number, e_mail , password FROM User').fetchall()
     conn.close()
-    return render_template('board.html', User=posts)
+    return render_template('board.html', name_table = "Candidat",User=posts)
 
 
