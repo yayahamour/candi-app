@@ -1,10 +1,10 @@
-input[type="text"]{
+label{
     display: block;
     width: 50%;
     height: 20px;
     margin: 10px auto;
 }
-input[type="submit"]{
+input[type="submit"],button{
     display:block;
     width: 15%;
     height: 30px;
