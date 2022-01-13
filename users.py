@@ -1,6 +1,6 @@
 from dataclasses import dataclass 
 import sqlite3
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect,request
 
 app = Flask(__name__)
 
@@ -59,9 +59,16 @@ class Apprenant(Users):
         JOIN Entreprise AS e ON e.id=c.enterprise_id
         WHERE u.first_name = ? AND e.id = ?""", (self.first_name,enterprise,))
         row = my_modification.fetchone()
-        @app.route('/')
-        def modify():
-            return render_template('Formulaire.html',row=row)
-
+        @app.route('/', methods=('GET','POST'))
+        def add_formulaire():
+            if request.method == "POST":
+                entreprise = request.form.get("Entreprise")
+                lieu = request.form.get("Lieu")
+                contact = request.form.get("Contact")
+                date = request.form.get("Date")
+                date_de_relance = request.form.get("Date de relance")
+                statut = request.form.get("Statut")
+            return render_template('Formulaire.html',row=row, liste=["Entreprise","Lieu","Contact","Date","Date de relance","Statut"])
+            
 rudy = Apprenant("BOUREZ","Rudy","mail@mail.com","*****","DEV IA","0606060606")
 rudy.modify_nomination()
