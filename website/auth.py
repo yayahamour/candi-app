@@ -20,16 +20,16 @@ def login():
                     )
         row = cur.fetchone()
         if row:
-            if row[6] == False:
+            if row[6] == 0:
                 user = Apprenant(row[0],row[1],row[2],row[4],row[5],row[3])
-            else:
+            elif row[6] == 1:
                 user = Admin(row[0],row[1],row[2],row[4],row[5])
             if user:
                 if user.password == password:
                     flash('Logged in successfully!', category='success')
                     
                     login_user(user, remember= True)
-                    return redirect(url_for('views.board', id = user.id))
+                    return redirect(url_for('views.board', id = user.id, admin = user.is_admin))
                 else:
                     flash('Incorrect password, try again.', category='error')
         else:
