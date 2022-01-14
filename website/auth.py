@@ -22,7 +22,7 @@ def login():
                     )
         row = cur.fetchone()
         if row:
-            if row[7] == False:
+            if row[6] == False:
                 user = Apprenant(row[0],row[1],row[2],row[4],row[5],row[3])
             else:
                 user = Admin(row[0],row[1],row[2],row[4],row[5])
