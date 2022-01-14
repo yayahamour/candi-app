@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, login_required, logout_user
 from website.users import Apprenant, Admin
+import os
 import sqlite3
 
 connection = sqlite3.connect('website/DB/base_test.db', check_same_thread=False)
@@ -29,6 +30,7 @@ def login():
                     flash('Logged in successfully!', category='success')
                     
                     login_user(user, remember= True)
+                    os.environ["Id"] = str(user.id)
                     return redirect(url_for('views.board', id = user.id, admin = user.is_admin))
                 else:
                     flash('Incorrect password, try again.', category='error')

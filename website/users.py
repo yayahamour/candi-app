@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 import sqlite3
-from flask import Flask, render_template,request, flash, redirect, url_for
+from flask import Flask, render_template,request, flash, redirect, url_for,Blueprint
 from website.form_add import LoginForm
 from datetime import date
+import os
 
+users= Blueprint("users",__name__)
 app = Flask(__name__)
 @dataclass
 class Users :
@@ -45,9 +47,12 @@ class Apprenant(Users):
     is_admin :bool = False
     is_active : bool = False 
 
-    def add_nomination():
+    @users.route('/formulaire', methods=['GET','POST'])
+    def formulaire():
         form_add = LoginForm()
-        if form_add.validate_on_submit():
+        id = int(os.environ["Id"])
+        print(id)
+        if request.method == "POST":
             entreprise = request.form["Entreprise"]
             lieu = request.form["Lieu"]
             contact = request.form["Contact"]
@@ -63,16 +68,17 @@ class Apprenant(Users):
                 nomination.execute("INSERT INTO Entreprise (name, lieu) VALUES (?,?)", (entreprise, lieu,))
                 new_enterprise_id = ("SELECT MAX(id) FROM Entreprise")
                 # add new nomination in Candidature table
-                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination, status) VALUES (?, ?, ?)", (self.id, new_enterprise_id, contact, my_date,status,))
+
+                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination, status) VALUES (?, ?, ?)", (id, new_enterprise_id, contact, my_date,status,))
             else :
                 enterprise_id = is_entreprise[0]
-                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination)",(self.id, enterprise_id, contact, my_date,status,))
+                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination)",(id, enterprise_id, contact, my_date,status,))
             c.commit()
 
             flash('Candidature ajoutée pour {}'.format(form_add.enterprise.data))
             
-            return redirect(url_for('board.html',form_add=form_add ))
-        return render_template('board.html', form_add=form_add)
+            return redirect(url_for('board'))
+        return render_template('formulaire.html', form_add=form_add)
      
      
 

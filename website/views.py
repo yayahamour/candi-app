@@ -14,10 +14,10 @@ def board():
     req = Req()
     is_admin = request.args.get("admin")
     if (is_admin == "True"):
-        return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact",""],name_table = "Candidat",User=req.request_all_nomination())
+        return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",User=req.request_all_nomination())
     elif (is_admin == "False"):
-        return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact",""],name_table = "Candidat",User=req.request_nomination_by_id(request.args.get("id")))
+        return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",User=req.request_nomination_by_id(request.args.get("id")))
 
-@views.route('/formulaire', methods=['GET', 'POST'])
-def formulaire():
-    return render_template('form_add.html', form_add=LoginForm())
+# @views.route('/formulaire', methods=['GET', 'POST'])
+# def formulaire():
+#     return render_template('form_add.html', form_add=LoginForm())
