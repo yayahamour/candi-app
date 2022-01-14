@@ -44,7 +44,9 @@
         </tbody>
       </table>
     </div>
-    <button onclick="{{url_for('users.formulaire') }}" method="post">Ajouter</button> 
+    <form method="POST" action="{{url_for('users.formulaire') }}">
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+  </form>
   </section>
 </body>
 </html>
