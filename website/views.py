@@ -1,5 +1,3 @@
-from curses import flash
-from pickle import GET
 from flask import Blueprint, render_template, request
 from website.Request import Request as Req
 
