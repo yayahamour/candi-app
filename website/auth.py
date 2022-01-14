@@ -31,7 +31,7 @@ def login():
                     flash('Logged in successfully!', category='success')
                     
                     login_user(user, remember= True)
-                    return redirect(url_for('views.home'))
+                    return redirect(url_for('views.board', id = user.id))
                 else:
                     flash('Incorrect password, try again.', category='error')
         else:
