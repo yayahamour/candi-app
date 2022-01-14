@@ -49,11 +49,11 @@ class Apprenant(Users):
 
     @users.route('/formulaire', methods=['GET','POST'])
     def formulaire():
-        form_add = LoginForm()
+        _form_add = LoginForm()
         id = int(os.environ["Id"])
         print(id)
         if request.method == "POST":
-            entreprise = request.form["Entreprise"]
+            entreprise = request.form["Enterprise"]
             lieu = request.form["Lieu"]
             contact = request.form["Contact"]
             my_date = date.today().strftime("%b-%d-%Y")
@@ -75,10 +75,10 @@ class Apprenant(Users):
                 nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination)",(id, enterprise_id, contact, my_date,status,))
             c.commit()
 
-            flash('Candidature ajoutée pour {}'.format(form_add.enterprise.data))
+            flash('Candidature ajoutée pour {}'.format(_form_add.enterprise.data))
             
             return redirect(url_for('board.html'))
-        return render_template('add_form.html', form_add=form_add)
+        return render_template('form_add.html', form_add=_form_add)
      
      
 
@@ -92,7 +92,7 @@ class Apprenant(Users):
         JOIN Entreprise AS e ON e.id=c.enterprise_id
         WHERE u.first_name = ? AND e.id = ?""", (self.first_name,enterprise,))
         row = my_modification.fetchone()
-        @users.route('/', methods=('GET','POST'))
+        @users.route('/Xformulaire', methods=('GET','POST'))
         def add_formulaire():
             if request.method == "POST":
                 entreprise = request.form.get("Entreprise")
