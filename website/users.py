@@ -6,7 +6,7 @@ from datetime import date
 import os
 
 users= Blueprint("users",__name__)
-app = Flask(__name__)
+
 @dataclass
 class Users :
 
@@ -77,8 +77,8 @@ class Apprenant(Users):
 
             flash('Candidature ajoutée pour {}'.format(form_add.enterprise.data))
             
-            return redirect(url_for('board'))
-        return render_template('formulaire.html', form_add=form_add)
+            return redirect(url_for('board.html'))
+        return render_template('add_form.html', form_add=form_add)
      
      
 
@@ -92,7 +92,7 @@ class Apprenant(Users):
         JOIN Entreprise AS e ON e.id=c.enterprise_id
         WHERE u.first_name = ? AND e.id = ?""", (self.first_name,enterprise,))
         row = my_modification.fetchone()
-        @app.route('/', methods=('GET','POST'))
+        @users.route('/', methods=('GET','POST'))
         def add_formulaire():
             if request.method == "POST":
                 entreprise = request.form.get("Entreprise")
