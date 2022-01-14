@@ -71,7 +71,7 @@ class Apprenant(Users):
 
             flash('Candidature ajoutée pour {}'.format(form_add.enterprise.data))
             
-            return redirect(url_for('board'))
+            return redirect(url_for('board.html',form_add=form_add ))
         return render_template('board.html', form_add=form_add)
      
      
@@ -95,4 +95,5 @@ class Apprenant(Users):
                 date = request.form.get("Date")
                 date_de_relance = request.form.get("Date de relance")
                 statut = request.form.get("Statut")
+            # Ajouter le update sql 
             return render_template('Formulaire.html',row=row, liste=["Entreprise","Lieu","Contact","Date","Date de relance","Statut"])
