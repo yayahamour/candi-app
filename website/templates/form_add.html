@@ -1,60 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nouvelle candidature</title>
-</head>
+{% extends "base.html" %} {% block title %}Formulaire{% endblock %} {% block content
+    %}
 <body>
-    {% block content %}
     <h1>Nouvelle Candidature</h1>
     <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
+        {{ form_add.hidden_tag() }}
         <p>
-            {{ form.entreprise.label }}<br>
-            {{ form.entreprise(size=32) }}<br>
-            {% for error in form.entreprise.errors %}
+            {{ form_add.entreprise.label }}<br>
+            {{ form_add.entreprise(size=32) }}<br>
+            {% for error in form_add.entreprise.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.lieu.label }}<br>
-            {{ form.lieu(size=32) }}<br>
-            {% for error in form.lieu.errors %}
+            {{ form_add.lieu.label }}<br>
+            {{ form_add.lieu(size=32) }}<br>
+            {% for error in form_add.lieu.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.contact.label }}<br>
-            {{ form.contact(size=32) }}<br>
-            {% for error in form.contact.errors %}
+            {{ form_add.contact.label }}<br>
+            {{ form_add.contact(size=32) }}<br>
+            {% for error in form_add.contact.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <!-- <p>
-            {{ form.date.label }}<br>
-            {{ form.date(size=32) }}<br>
-            {% for error in form.date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.date_de_relance.label }}<br>
-            {{ form.date_de_relance(size=32) }}<br>
-            {% for error in form.date_de_relance.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.statut.label }}<br>
-            {{ form.statut(size=32) }}<br>
-            {% for error in form.statut.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p> -->
         
-        <p>{{ form.submit() }}</p>
+            <p>
+            {{ form_add.date.label }}<br>
+            {{ form_add.date(size=32) }}<br>
+            {% for error in form_add.date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form_add.date_de_relance.label }}<br>
+            {{ form_add.date_de_relance(size=32) }}<br>
+            {% for error in form_add.date_de_relance.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form_add.statut.label }}<br>
+            {{ form_add.statut(size=32) }}<br>
+            {% for error in form_add.statut.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p> 
+   
+        
+        <p>{{ form_add.submit() }}</p>
     </form>
 {% endblock %}
 </body>

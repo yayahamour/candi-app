@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from website.Request import Request as Req
+from website.form_add import LoginForm
 
 views = Blueprint('views', __name__)
 
@@ -17,3 +18,6 @@ def board():
     elif (is_admin == "False"):
         return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact",""],name_table = "Candidat",User=req.request_nomination_by_id(request.args.get("id")))
 
+@views.route('/formulaire', methods=['GET', 'POST'])
+def formulaire():
+    return render_template('form_add.html', form_add=LoginForm())
