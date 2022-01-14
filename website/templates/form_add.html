@@ -26,29 +26,6 @@
             {% endfor %}
         </p>
         
-            <p>
-            {{ form_add.date.label }}<br>
-            {{ form_add.date(size=32) }}<br>
-            {% for error in form_add.date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form_add.date_de_relance.label }}<br>
-            {{ form_add.date_de_relance(size=32) }}<br>
-            {% for error in form_add.date_de_relance.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form_add.statut.label }}<br>
-            {{ form_add.statut(size=32) }}<br>
-            {% for error in form_add.statut.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p> 
-   
-        
         <p>{{ form_add.submit() }}</p>
     </form>
 {% endblock %}

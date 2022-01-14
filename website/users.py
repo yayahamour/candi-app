@@ -45,15 +45,13 @@ class Apprenant(Users):
     is_active : bool = False 
 
     def add_nomination():
-        pass
         form_add = LoginForm()
         if form_add.validate_on_submit():
             entreprise = request.form["Entreprise"]
             lieu = request.form["Lieu"]
             contact = request.form["Contact"]
-            # date = request.form["Date"]
-            # date_de_relance = request.form["Date de relance"]
-            # statut = request.form["Statut"]
+            my_date = date.today().strftime("%b-%d-%Y")
+            status = "En cours"
 
             c = sqlite3.connect('website/DB/base_test.db')
             nomination = c.cursor()
@@ -64,16 +62,17 @@ class Apprenant(Users):
                 nomination.execute("INSERT INTO Entreprise (name, lieu) VALUES (?,?)", (entreprise, lieu,))
                 new_enterprise_id = ("SELECT MAX(id) FROM Entreprise")
                 # add new nomination in Candidature table
-                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact) VALUES (?, ?, ?)", (user_id, new_enterprise_id, contact,))
+                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination, status) VALUES (?, ?, ?)", (self.id, new_enterprise_id, contact, my_date,status,))
             else :
                 enterprise_id = is_entreprise[0]
-                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact)",(user_id, enterprise_id, contact,))
+                nomination.execute("INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination)",(self.id, enterprise_id, contact, my_date,status,))
             c.commit()
 
             flash('Candidature ajoutée pour {}'.format(form_add.enterprise.data))
             
             return redirect(url_for('board'))
         return render_template('board.html', form_add=form_add)
+     
      
 
     def modify_nomination(self):
