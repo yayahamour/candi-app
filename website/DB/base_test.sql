@@ -21,14 +21,16 @@ CREATE TABLE Entreprise (
 CREATE TABLE Candidature (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-    enterprise_id INTEGER NULL,
-    contact VARCHAR(100)
+    enterprise_id INTEGER NOT NULL,
+    contact VARCHAR(100),
+    date_nomination DATE,
+    status VARCHAR(50) NOT NULL
 );
 
 INSERT INTO User (last_name, first_name, telephone_number, e_mail, password, is_admin) VALUES 
-("Bourez", "Rudy", "06.06.06.06.06","mail@mail.com", "******", false),
+("Bourez", "Rudy", "06.06.06.06.06","rudy@gmail.com", "mdp", false),
 ("Hamour", "Yanis", "06.06.06.06.06","mail@mail.com", "******", false),
-("Durand", "Brune", "","mail@mail.com", "******", true),
+("Durand", "Brune", "","brune@gmail.com", "Admin", true),
 ("Abgrall", "Floriant", "06.06.06.06.06","mail@mail.com", "******", false),
 ("Belarbi", "Safia", "","mail@mail.com", "******", true),
 ("Adeoye", "Gidéon", "06.06.06.06.06","mail@mail.com", "******", false),
@@ -41,12 +43,12 @@ INSERT INTO Entreprise (name, place) VALUES
 ("Turlututu", "Seclin"),
 ("Rondoudou", "Marcq-en-Bareuil");
 
-INSERT INTO Candidature (user_id, enterprise_id, contact) VALUES
-(0,0,"John Doe"),
-(1,1,"Robert"),
-(5,2,""),
-(1,1,"Patricia"),
-(7,2,"Brigitte"),
-(3,3,""),
-(1,0,"Patrick"),
-(2,3,"Jules");
+INSERT INTO Candidature (user_id, enterprise_id, contact, date_nomination, status) VALUES
+(2,1,"John Doe", DATE('2021-05-07'), "En cours"),
+(1,1,"Robert",DATE('2021-05-07'), "En cours"),
+(5,2,"",DATE('2021-05-07'), "En cours"),
+(1,1,"Patricia",DATE('2021-05-07'), "En cours"),
+(7,2,"Brigitte",DATE('2021-05-07'), "En cours"),
+(3,3,"",DATE('2021-05-07'), "En cours"),
+(1,1,"Patrick",DATE('2021-05-07'), "En cours"),
+(2,3,"Jules",DATE('2021-05-07'), "En cours");
