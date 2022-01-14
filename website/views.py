@@ -10,5 +10,5 @@ def home():
 @views.route('/board', methods=['GET'])
 def board():
     req = Req()
-    return render_template('board.html', title = ["Nom", "Ville","Contact"],name_table = "Candidat",User=req.request_nomination_by_id(request.args.get("id")))
+    return render_template('board.html', title = ["Nom", "Ville","Contact",""],name_table = "Candidat",User=req.request_nomination_by_id(request.args.get("id")))
 
