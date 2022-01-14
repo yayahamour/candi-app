@@ -1,21 +1,16 @@
 from dataclasses import dataclass 
 import sqlite3
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,Blueprint
 
 app = Flask(__name__)
-
 @dataclass
-class Users : 
+class Users :
+
+    id : int
     last_name : str
     first_name : str 
     email : str 
     password : str 
-    
-    def login(self): 
-        pass
-    
-    def logout(self): 
-        pass
     
     def change_password(self): 
         pass
@@ -29,7 +24,8 @@ class Users :
 @dataclass
 class Admin(Users):
 
-    is_admin = True
+    is_admin :bool = True
+    is_active : bool = False 
 
     def search_by_apprenant():
         pass
@@ -42,9 +38,10 @@ class Admin(Users):
     
 @dataclass
 class Apprenant(Users):
-    promo_name : int 
-    phone_number : str 
-    is_admin = False
+
+    phone_number :str 
+    is_admin :bool = False
+    is_active : bool = False 
 
     def add_nomination():
         pass 
