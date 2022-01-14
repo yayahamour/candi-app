@@ -1,8 +1,7 @@
 from dataclasses import dataclass
-import imp 
 import sqlite3
-from flask import Flask, render_template,request,Blueprint, flash, redirect, url_for
-from form_add import LoginForm
+from flask import Flask, render_template,request, flash, redirect, url_for
+from website.form_add import LoginForm
 
 app = Flask(__name__)
 @dataclass
@@ -97,6 +96,3 @@ class Apprenant(Users):
                 date_de_relance = request.form.get("Date de relance")
                 statut = request.form.get("Statut")
             return render_template('Formulaire.html',row=row, liste=["Entreprise","Lieu","Contact","Date","Date de relance","Statut"])
-            
-rudy = Apprenant("BOUREZ","Rudy","mail@mail.com","*****","DEV IA","0606060606")
-rudy.modify_nomination()

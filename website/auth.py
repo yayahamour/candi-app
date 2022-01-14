@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-# from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user
 from website.users import Apprenant, Admin
 import sqlite3
 
@@ -10,7 +9,6 @@ cur = connection.cursor()
 
 auth = Blueprint('auth', __name__)
 
-    
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -41,5 +39,5 @@ def login():
 
 @auth.route('/logout')
 def logout():
-    logout_user()
+    logout_user
     return redirect(url_for('auth.login'))
