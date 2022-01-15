@@ -1,6 +1,4 @@
 from os import name
-import re
-import flask
 import sqlite3
 
 class Request():

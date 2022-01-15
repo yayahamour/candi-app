@@ -1,33 +1,40 @@
-{% extends "base.html" %} {% block title %}Formulaire{% endblock %} {% block content
-    %}
-<body>
-    <h1>Nouvelle Candidature</h1>
-    <form action="{{ url_for('views.board')}}" method="post" novalidate>
-        {{ form_add.hidden_tag() }}
-        <p>
-            {{ form_add.entreprise.label }}<br>
-            {{ form_add.entreprise(size=32) }}<br>
-            {% for error in form_add.entreprise.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form_add.lieu.label }}<br>
-            {{ form_add.lieu(size=32) }}<br>
-            {% for error in form_add.lieu.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form_add.contact.label }}<br>
-            {{ form_add.contact(size=32) }}<br>
-            {% for error in form_add.contact.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        
-        <p>{{ form_add.submit() }}</p>
+{% extends "base.html" %} {% block title %}Ajouter une candidature{% endblock %} {% block
+    content %}
+    <form method="POST">
+      <h3 align="center">Sign Up</h3>
+      <div class="form-group">
+        <label for="entreprise">Entreprise</label>
+        <input
+          type="text"
+          class="form-control"
+          id="entreprise"
+          name="entreprise"
+          placeholder="Enter le nom de l'entreprise"
+        />
+      </div>
+      <div class="form-group">
+        <label for="adresse">Adresse de l'entreprise</label>
+        <input
+          type="text"
+          class="form-control"
+          id="adresse"
+          name="adresse"
+          placeholder="Enter l'adresse de l'entreprise"
+        />
+      </div>
+      <div class="form-group">
+        <label for="contact">Contact de l'entreprise</label>
+        <input
+          type="text"
+          class="form-control"
+          id="contact"
+          name="contact"
+          placeholder="Vous pouvez ajouter un nom, email ou numéro de telephone "
+        />
+      </div>
+
+      <br />
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-{% endblock %}
-</body>
-</html>
+    {% endblock %}
+    

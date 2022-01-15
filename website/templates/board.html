@@ -26,12 +26,20 @@
     <div class="tbl-content">
       <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-        {% for row in User%}
+        {% for one in User%}
           <tr>
-          {% for info in row %}
-            <td>{{ info }}</td>
-          {% endfor %}
-                    <td>
+         
+            <td>{{ one.name }}</td>
+            <td>{{ one.name }}</td>
+            <td>{{ one.name}}</td>
+            <!-- A completer avec le tableau join candidature -->
+            <td> {{ one.place}}</td> 
+            <td> {{ one.contact }} </td>
+            <td> {{one.date}} </td>
+            <td> En cours </td>
+
+          
+            <td>
             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
               <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
           </svg>
@@ -44,7 +52,7 @@
         </tbody>
       </table>
     </div>
-    <form action="{{url_for('users.formulaire') }}">
+    <form action="{{url_for('views.formulaire') }}">
       <button type="submit" class="btn btn-primary">Ajouter</button>
   </form>
   </section>
