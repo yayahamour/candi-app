@@ -47,6 +47,9 @@ class Request():
         result = connection.execute(request).fetchall()
         connection.close()
         return result
+    
+    # def request_all_nomination2(self):
+    #     request = 
 
 request = Request()
 

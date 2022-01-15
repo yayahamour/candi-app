@@ -16,7 +16,7 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
-    render_template('base.html', boolean = True)
+    render_template('base.html', boolean = True, current_user = current_user)
     return redirect(url_for('auth.login'))
 
 
@@ -24,7 +24,10 @@ def home():
 @login_required
 def board():
     req = Req()
+    
     return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",User=Entreprise.query.all())
+
+
 
 @views.route('/formulaire', methods=['GET','POST'])
 @login_required
