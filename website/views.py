@@ -22,13 +22,16 @@ def home():
 @views.route('/board', methods=['GET'])
 @login_required
 def board():
-    req = Req()
-    row_name = [i for i in Request.table_candidature()]
-    print(row_name)
-    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",db=Request.table_candidature())
+
+    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",db=Request.table_candidature_user())
 
 
+@views.route('/board-all', methods = ['GET'])
+@login_required
+def board_admin():
+    return render_template('board-all.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",db=Request.table_candidature_admin())
 
+    
 @views.route('/formulaire', methods=['GET','POST'])
 @login_required
 def formulaire():
@@ -54,7 +57,7 @@ def formulaire():
             return redirect(url_for('views.board'))
     return render_template('form_add.html', current_user=current_user, entreprises = Entreprise.query.all())
 
-@views.route('/formulaire-add', methods=['GET','POST'])
+@views.route('/formulaire-add2', methods=['GET','POST'])
 @login_required
 def formulaire_nomination():
 
@@ -62,6 +65,7 @@ def formulaire_nomination():
     if request.method == "POST":
         
         entreprise = request.form.get("entreprise")
+        ville = request.form.get("ville")
         contact = request.form.get("contact")
         status = request.form.get("status")
         entreprise_choice = request.form.get("monselect")
@@ -70,19 +74,21 @@ def formulaire_nomination():
         # Ajouter le filtre 2 pour choisir le contact quand existe 
         # Ajouter if choice == 'AUTRE ou AUCUN' pour ajouté une candidature ? 
         if filter :
-            flash('Cette entreprise a déja été ajouté, choisissez là dans la liste', category='error')
-            db.engine.Candidature.insert(entreprise_choice, contact, status).where()
+            flash('Cette entreprise a déja été ajouté, attendre l\'implémentation du insert', category='error')
+            # db.engine.Candidature.insert((entreprise_name => where entreprise_name == Candidature ), contact=contact, status = status).where()
         else:
             
-            new_entreprise = Candidature(contact=contact, status=status)
+
+            new_entreprise = Entreprise(name = entreprise ,place = ville, contact=contact )
+            new_candidature = Candidature(contact=contact, status=status , enterprise_id = 1, user_id = current_user.id)
             flash('Nouvelle Candidature ajouté ', category='succes')
             
             db.session.add(new_entreprise)
+            db.session.add(new_candidature)
             db.session.commit()
             
             return redirect(url_for('views.board'))
-    else:
-        flash('Veuillez choisir "Autre entreprise" pour en ajouter une si elle n\'est pas dans la liste', category='error')
+
     return render_template('form_add2.html',  entreprises = Entreprise.query.all())
 
 
