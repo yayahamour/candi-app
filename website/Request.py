@@ -24,7 +24,6 @@ class Request():
     
     
     
-
     
 # ----------------------------------------------------------------> Note
 # db.session.query(Entreprise).all()
@@ -40,38 +39,3 @@ class Request():
 #     user = User.query.all()
 #     for use in user:
 #         print('Users : ', use.last_name)
-    
-    # Je commence une migration avec des requete myslqlalchemy.  
-
-# request = Request()
-
-# print("request nomination 1")
-# RESULT = request.request_nomination_by_id(1)
-# for i in RESULT:
-#     print(i)
-    
-
-# print("request nomination Rudy")
-# RESULT = request.request_nomination_by_firstname("Rudy")
-# for i in RESULT:
-#     print(i)
-    
-# print("request nomination Bourez")
-# RESULT = request.request_nomination_by_lastname("Bourez")
-# for i in RESULT:
-#     print(i)
-
-# print("request nomination RUDy Bourez")
-# RESULT = request.request_nomination_by_firstname_lastname("RUDY", "Bourez")
-# for i in RESULT:
-#     print(i)
-    
-# print("request all nomination")
-# RESULT = request.request_all_nomination()
-# for i in RESULT:
-#     print(i)
-    
-# print("request nomination Urluberlu")
-# RESULT = request.request_nomination_by_entreprise_name("Urluberlu")
-# for i in RESULT:
-#     print(i)

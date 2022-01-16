@@ -26,15 +26,15 @@ def board():
     return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",db=Request.table_candidature_user())
 
 
-@views.route('/board-all', methods = ['GET'])
+@views.route('/board-admin', methods = ['GET'])
 @login_required
 def board_admin():
     return render_template('board-all.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidat",db=Request.table_candidature_admin())
 
     
-@views.route('/formulaire', methods=['GET','POST'])
+@views.route('/formulaire-entreprise', methods=['GET','POST'])
 @login_required
-def formulaire():
+def enterprise_add():
     
     
     if request.method == "POST":
@@ -57,9 +57,9 @@ def formulaire():
             return redirect(url_for('views.board'))
     return render_template('form_add.html', current_user=current_user, entreprises = Entreprise.query.all())
 
-@views.route('/formulaire-add2', methods=['GET','POST'])
+@views.route('/formulaire-candidature', methods=['GET','POST'])
 @login_required
-def formulaire_nomination():
+def nomination_add():
 
 
     if request.method == "POST":
@@ -90,32 +90,6 @@ def formulaire_nomination():
             return redirect(url_for('views.board'))
 
     return render_template('form_add2.html',  entreprises = Entreprise.query.all())
-
-
-
-
-# def modify_nomination(self):
-#     enterprise = 1 # Enterprise_id obtained from HTML attribute
-#     conn = sqlite3.connect('website/DB/base_test.db')
-#     my_modification = conn.cursor()
-#     my_modification.execute("""SELECT name, place, contact
-#     FROM Candidature AS c
-#     JOIN User AS u ON u.id=c.user_id
-#     JOIN Entreprise AS e ON e.id=c.enterprise_id
-#     WHERE u.first_name = ? AND e.id = ?""", (self.first_name,enterprise,))
-#     row = my_modification.fetchone()
-#     @users.route('/Xformulaire', methods=('GET','POST'))
-#     def add_formulaire():
-#         if request.method == "POST":
-#             entreprise = request.form.get("Entreprise")
-#             lieu = request.form.get("Lieu")
-#             contact = request.form.get("Contact")
-#             date = request.form.get("Date")
-#             date_de_relance = request.form.get("Date de relance")
-#             statut = request.form.get("Statut")
-#         # Ajouter le update sql 
-#         return render_template('Formulaire.html',row=row, liste=["Entreprise","Lieu","Contact","Date","Date de relance","Statut"])
-
 
 
 
