@@ -11,6 +11,7 @@
 </head>
 <body>
   <section>
+    <h2>Bonjour {{current_user.first_name}} </h2>
     <h1>{{name_table}}</h1>
     <div class="tbl-header">
       <table cellpadding="0" cellspacing="0" border="0">
@@ -26,17 +27,17 @@
     <div class="tbl-content">
       <table cellpadding="0" cellspacing="0" border="0">
         <tbody>
-        {% for one in User%}
+        {% for one in db%}
           <tr>
          
-            <td>{{ one.name }}</td>
-            <td>{{ one.name }}</td>
+            <td>{{ one.last_name }}</td>
+            <td>{{ one.first_name }}</td>
             <td>{{ one.name}}</td>
             <!-- A completer avec le tableau join candidature -->
             <td> {{ one.place}}</td> 
             <td> {{ one.contact }} </td>
             <td> {{one.date}} </td>
-            <td> En cours </td>
+            <td> {{one.status}}  </td>
 
           
             <td>
@@ -49,12 +50,20 @@
           </td>
           </tr>
         {% endfor %}
+        
         </tbody>
       </table>
     </div>
-    <form action="{{url_for('views.formulaire') }}">
-      <button type="submit" class="btn btn-primary">Ajouter</button>
+
+    <div align="center" > 
+      <form action="{{url_for('views.formulaire') }}">
+        <button type="submit" class="btn btn-primary">Ajouter une entreprise</button>
+    </form>
+    <br>
+    <form action="{{url_for('views.formulaire_nomination') }}">
+      <button type="submit" class="btn btn-primary">Ajouter une candidature</button>
   </form>
+    </div>
   </section>
 </body>
 </html>

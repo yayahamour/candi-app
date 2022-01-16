@@ -1,5 +1,9 @@
 from os import name
 import sqlite3
+from . import db 
+from .models import Entreprise, Candidature, User
+from sqlalchemy.sql import select 
+
 
 class Request():
     
@@ -48,8 +52,38 @@ class Request():
         connection.close()
         return result
     
-    # def request_all_nomination2(self):
-    #     request = 
+    def table_candidature():
+        # Jointure a revoir ne fonctionne pas bien. 
+        conn = db.engine.connect()
+        test = db.session.query(Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status, User.first_name, User.last_name).all()
+        test2 = select(Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status, User.first_name, User.last_name, User.id).where( User.id == Candidature.id)
+        result = conn.execute(test2)
+        return result
+    
+    def table_candidature2():
+        # test 
+        conn = db.engine.connect()
+        target = select(User.last_name, User.first_name, Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status).where( User.id == Candidature.user_id , Candidature.enterprise_id == Entreprise.id)
+        result = conn.execute(target)
+        return result 
+    
+    
+# ----------------------------------------------------------------> Note
+# db.session.query(Entreprise).all()
+# Revient exactement au meme que Entreprise.query.all() -- 
+# A revoir pour la différence ? 
+        
+
+# # Pour voir dans les tables : 
+#     user = User.query.all()
+#     for use in user :
+#         print('Entreprise  : ' , use.name)
+        
+#     user = User.query.all()
+#     for use in user:
+#         print('Users : ', use.last_name)
+    
+    # Je commence une migration avec des requete myslqlalchemy.  
 
 request = Request()
 
