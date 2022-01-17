@@ -24,16 +24,8 @@ def home():
 @views.route('/board', methods=['GET'])
 @login_required
 def board():
-    ici_1 = Entreprise.query.all()
-    ici = Candidature.query.all()
-    for i in ici_1 :
-        print('Entreprise id : ', i.id)
-        
-    for i in ici:
-        print('Candidature.entreprise_id : ' , i.enterprise_id)
-        print('Cendidature id : ', i.id)
     
-    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidature Dashboard",db=Request.table_candidature_user_test())
+    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidature Dashboard",db=Request.table_candidature_user())
 
 
 # Dashboard admin
@@ -54,31 +46,20 @@ def nomination_add():
 
     if request.method == "POST":
         
-        entreprise = request.form.get("entreprise")
-        ville = request.form.get("ville")
         contact = request.form.get("contact")
         status = request.form.get("status")
         entreprise_choice = request.form.get("monselect")
-        filter = Entreprise.query.filter_by(name=entreprise).first()
-        if filter :
-            flash('Cette entreprise a déja été ajouté, attendre l\'implémentation du insert', category='error')
-            # db.engine.Candidature.insert((entreprise_name => where entreprise_name == Candidature ), contact=contact, status = status).where()
-        else:
-            
-            # Ces 4 lignes servent à éviter un message d'erreur lors du premier démarrage de l'app 
-            if Entreprise.query.all() == []:
-                operation = 1
-            else:
-                operation = Entreprise.query.all()[-1].id
-                
-            new_entreprise = Entreprise(name = entreprise ,place = ville  )
-            new_candidature = Candidature(contact=contact, status=status , enterprise_id = operation,  user_id = current_user.id)
-            db.session.add(new_entreprise)
-            db.session.add(new_candidature)
-            db.session.commit()
-            flash('Nouvelle Candidature ajouté ', category='succes')
-            
-            return redirect(url_for('views.board'))
+        
+
+        choice_2 = db.session.query(Entreprise).filter(Entreprise.name == entreprise_choice)
+        a = ""
+        for i in choice_2 :
+            a = i.id 
+        new_candidature = Candidature(contact=contact, status=status , enterprise_id = a,  user_id = current_user.id)
+        db.session.add(new_candidature)
+        db.session.commit()
+        flash('Nouvelle Candidature ajouté ', category='succes')
+        return redirect(url_for('views.board'))
     return render_template('form_add2.html',  entreprises = Entreprise.query.all())
 
 
@@ -92,7 +73,6 @@ def enterprise_add():
         
         entreprise = request.form.get("entreprise")
         lieu = request.form.get("adresse")
-        contact = request.form.get("contact")
         
         filter = Entreprise.query.filter_by(name=entreprise).first()
         if filter :
@@ -105,7 +85,7 @@ def enterprise_add():
             db.session.add(new_entreprise)
             db.session.commit()
             
-            return redirect(url_for('views.board'))
+            return redirect(url_for('views.nomination_add'))
     return render_template('form_add.html', current_user=current_user, entreprises = Entreprise.query.all())
 
 
