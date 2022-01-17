@@ -30,20 +30,6 @@ class Request():
         target = select(User.first_name, User.last_name, Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status).join(User).where(User.id == Candidature.user_id ).join(Entreprise).where(Entreprise.id == Candidature.enterprise_id).order_by(Candidature.date)
         result = conn.execute(target)
         return result
-
-    def table_candidature_user_test():
-        # Fonctionne pour n'avoir que les requette du current User (Entreprise name/place pas bon)
-        conn = db.engine.connect()
-        target = select(User.first_name, User.last_name, Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status).where(current_user.id == Candidature.user_id , current_user.email == User.email).join(Entreprise).where(Entreprise.id == Candidature.enterprise_id).order_by(Candidature.date)
-        result = conn.execute(target)
-        return result   
-    
-    def table_candidature_user_test2():
-        # Fonctionne pour n'avoir que les requette du current User (Entreprise name/place pas bon)
-        conn = db.engine.connect()
-        target = select(User.first_name, User.last_name, Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status).where(current_user.email == User.email).join(Candidature, Entreprise).where(current_user.id == Candidature.user_id, Entreprise.id == Candidature.enterprise_id).order_by(Candidature.date)
-        result = conn.execute(target)
-        return result   
     
     
     

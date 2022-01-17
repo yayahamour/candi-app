@@ -1,16 +1,18 @@
 {% extends "base.html" %} {% block title %}Ajouter une candidature{% endblock %} {% block
     content %}
-    <h2>Bonjour {{current_user.first_name}} </h2>
+    <br>
     <form method="POST">
-      <h3 align="center">Ajouter une candidature</h3>
-
+      <h2 align="center">Ajouter une candidature</h2>
+<br>
+<h4>Bonjour {{current_user.first_name}} </h4>
+<br>
       <div class="form-group">
 
 
-          <label for="monselect">Veuillez choisir une entreprise ou selectionner autre pour en ajoute une :</label>
+          <label for="monselect">Selectionner une entreprise :</label>
           <input list="navigateurs" id="monselect" name="monselect"/>
-          <datalist id="navigateurs">
-                <option >AUTRE</option>
+          <br><br>
+          <datalist >
                 {% for entreprise in entreprises %}
                   <option >{{entreprise.name}}</option>
                   {% endfor %}

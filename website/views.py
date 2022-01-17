@@ -49,17 +49,20 @@ def nomination_add():
         contact = request.form.get("contact")
         status = request.form.get("status")
         entreprise_choice = request.form.get("monselect")
-        
-
-        choice_2 = db.session.query(Entreprise).filter(Entreprise.name == entreprise_choice)
-        a = ""
-        for i in choice_2 :
-            a = i.id 
-        new_candidature = Candidature(contact=contact, status=status , enterprise_id = a,  user_id = current_user.id)
-        db.session.add(new_candidature)
-        db.session.commit()
-        flash('Nouvelle Candidature ajouté ', category='succes')
-        return redirect(url_for('views.board'))
+        if not entreprise_choice :
+            flash('Veuillez choisir une entreprise', category='error')
+        elif entreprise_choice == "Aucun":
+            flash('Veuillez choisir une entreprise', category='error')
+        else:
+            choice_2 = db.session.query(Entreprise).filter(Entreprise.name == entreprise_choice)
+            entrepriseID = ""
+            for i in choice_2 :
+                entrepriseID = i.id 
+            new_candidature = Candidature(contact=contact, status=status , enterprise_id = entrepriseID,  user_id = current_user.id)
+            db.session.add(new_candidature)
+            db.session.commit()
+            flash('Nouvelle Candidature ajouté ', category='succes')
+            return redirect(url_for('views.board'))
     return render_template('form_add2.html',  entreprises = Entreprise.query.all())
 
 
@@ -85,7 +88,7 @@ def enterprise_add():
             db.session.add(new_entreprise)
             db.session.commit()
             
-            return redirect(url_for('views.nomination_add'))
+            return redirect(url_for('views.board'))
     return render_template('form_add.html', current_user=current_user, entreprises = Entreprise.query.all())
 
 
