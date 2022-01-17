@@ -8,13 +8,15 @@ from flask_login import current_user
 
 class Request():
     
+    # Dashboard Admin 
     def table_candidature_admin():
-        # Récupère toute les requetes (Entreprise name/place pas bon)
+        # Récupère toute les requetes (Entreprise name/place)
         conn = db.engine.connect()
         target = select(User.first_name, User.last_name, Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status).join(User).where(User.id == Candidature.user_id ).join(Entreprise).where(Entreprise.id == Candidature.enterprise_id).order_by(Candidature.date)
         result = conn.execute(target)
         return result
 
+    # Dashbord Users
     def table_candidature_user():
         # Fonctionne pour n'avoir que les requette du current User (Entreprise name/place pas bon)
         conn = db.engine.connect()
@@ -23,12 +25,26 @@ class Request():
         return result   
     
     
+    def table_candidature_admin_test():
+        # Récupère toute les requetes (Entreprise name/place pas bon)
+        conn = db.engine.connect()
+        target = select(User.first_name, User.last_name, Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status).join(User).where(User.id == Candidature.user_id ).join(Entreprise).where(Entreprise.id == Candidature.enterprise_id).order_by(Candidature.date)
+        result = conn.execute(target)
+        return result
+
+    def table_candidature_user_test():
+        # Fonctionne pour n'avoir que les requette du current User (Entreprise name/place pas bon)
+        conn = db.engine.connect()
+        target = select(User.first_name, User.last_name, Entreprise.name, Entreprise.place, Candidature.contact, Candidature.date, Candidature.status).where(current_user.id == Candidature.user_id , current_user.email == User.email).join(Entreprise).where(Entreprise.id == Candidature.enterprise_id).order_by(Candidature.date)
+        result = conn.execute(target)
+        return result   
+    
     
     
 # ----------------------------------------------------------------> Note
 # db.session.query(Entreprise).all()
-# Revient exactement au meme que Entreprise.query.all() -- 
-# A revoir pour la différence ? 
+# Revient au meme que Entreprise.query.all() -- 
+# A revoir pour la différence de passé par la db.session ? 
         
 
 # # Pour voir dans les tables : 

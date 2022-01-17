@@ -7,9 +7,6 @@ import sqlite3
 from .models import User
 from . import db 
 
-# connection = sqlite3.connect('website/DB/base_test.db', check_same_thread=False)
-# cur = connection.cursor()
-
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])

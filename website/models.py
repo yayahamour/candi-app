@@ -17,8 +17,6 @@ class Entreprise(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     name = db.Column(db.String(150))
     place = db.Column(db.String(150))
-    contact = db.Column(db.String(150))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
 
 
 class Candidature(db.Model):
