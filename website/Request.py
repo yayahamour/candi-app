@@ -1,5 +1,4 @@
 from os import name
-import sqlite3
 from . import db 
 from .models import Entreprise, Candidature, User
 from sqlalchemy.sql import select 

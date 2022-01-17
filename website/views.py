@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from website.Request import Request as Req
 from flask_login import login_required, current_user
-import sqlite3
 from datetime import date
 from . import models 
 from .models import Entreprise, User, Candidature
