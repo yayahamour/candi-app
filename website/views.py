@@ -25,7 +25,7 @@ def home():
 @login_required
 def board():
 
-    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidature Dashboard",db=Request.table_candidature_user() , Request = Request)
+    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Apprenant Dashboard",db=Request.table_candidature_user() , Request = Request)
 
 
 # Dashboard admin
