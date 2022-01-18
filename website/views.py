@@ -24,8 +24,8 @@ def home():
 @views.route('/board', methods=['GET'])
 @login_required
 def board():
-    
-    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidature Dashboard",db=Request.table_candidature_user())
+
+    return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],name_table = "Candidature Dashboard",db=Request.table_candidature_user() , Request = Request)
 
 
 # Dashboard admin
