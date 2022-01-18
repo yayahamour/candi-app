@@ -12,7 +12,7 @@
           <label for="monselect">Selectionner une entreprise :</label>
           <input list="navigateurs" id="monselect" name="monselect"/>
           <br><br>
-          <datalist >
+          <datalist id="navigateurs">
                 {% for entreprise in entreprises %}
                   <option >{{entreprise.name}}</option>
                   {% endfor %}
