@@ -53,6 +53,9 @@ def nomination_add():
             flash('Veuillez choisir une entreprise', category='error')
         elif entreprise_choice == "Aucun":
             flash('Veuillez choisir une entreprise', category='error')
+        filter = Entreprise.query.filter_by(name=entreprise_choice).first()
+        if not filter :
+            flash('Veuillez choisir une entreprise existante où evous réferer à la section : insérer une Entreprise', category='error')
         else:
             choice_2 = db.session.query(Entreprise).filter(Entreprise.name == entreprise_choice)
             entrepriseID = ""
