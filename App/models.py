@@ -21,8 +21,8 @@ class Users(db.Model,UserMixin):
 
 class Enterprise(db.Model):
     id = db.Column(db.Integer(), primary_key=True, nullable=False, unique=True)
-    name = db.Column(db.String(length=50), nullable=False, unique=True)
-    place = db.Column(db.String(length=50), nullable=False)
+    name = db.Column(db.String(length=50), nullable=False)
+    place = db.Column(db.String(length=50))
 
     def __repr__(self):
         return f'{self.name} {self.place}'
@@ -33,8 +33,8 @@ class Candidacy(db.Model):
     enterprise_id = db.Column(db.Integer(), nullable=False)
     contact = db.Column(db.String(length=50), nullable=False)
     date = db.Column(db.String(), nullable=False)
-    date_retry = db.Column(db.Date(), nullable=True)
-    status = db.Column(db.String(length=20), nullable=True, default='En cours')
+    date_retry = db.Column(db.String(), nullable=True)
+    status = db.Column(db.String(), nullable=True, default="En cours")
 
     def __repr__(self):
         return f' Candidat id : {self.user_id}, Entreprise id: {self.enterprise_id}'

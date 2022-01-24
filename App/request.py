@@ -10,7 +10,7 @@ class Request():
      
     def request_nomination_by_id(self, id):
         connection = self.get_db_connection()
-        request = "SELECT E.id, E.name, E.place, C.contact, C.date, C.status FROM Candidacy as C Join Users as U ON U.id = C.user_id JOIN Enterprise as E ON E.id = C.enterprise_id WHERE U.id = "+ str(id)
+        request = "SELECT C.id, E.name, E.place, C.contact, C.date, C.status FROM Candidacy as C Join Users as U ON U.id = C.user_id JOIN Enterprise as E ON E.id = C.enterprise_id WHERE U.id = "+ str(id)
         result = connection.execute(request).fetchall()
         connection.close()
         return result
