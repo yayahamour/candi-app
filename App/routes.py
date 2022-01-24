@@ -27,7 +27,7 @@ def login_page():
 @login_required
 def board_page():
     req = Request()
-    if (current_user.is_admin == "True"):
+    if (current_user.is_admin == True):
         return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_all_nomination())
     else:
         return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
