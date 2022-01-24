@@ -1,9 +1,9 @@
-from flask import render_template, redirect,url_for,flash
+from flask import render_template, redirect, request, url_for, flash
 from App import db, app
 from datetime import date
 from App.request import Request
 from .models import Users, Enterprise, Candidacy
-from .forms import Login, AddCandidacy, ModifyProfile
+from .forms import Login, AddCandidacy, ModifyCandidacy, ModifyProfile
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
@@ -31,7 +31,7 @@ def board_page():
     if (current_user.is_admin == True):
         return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status"],User=req.request_all_nomination())
     else:
-        return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
+        return render_template('board.html', title = ["ID", "Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
 
 @app.route('/logout')
 def logout_page():
@@ -73,3 +73,23 @@ def modify_profile():
         else:
             flash('Adresse email ou mot de passe invalide',category="danger")
     return render_template('modify_profile.html',form=form)
+
+@app.route('/modify_candidacy', methods=['GET', 'POST'])
+@login_required
+def modify_candidacy():
+    form = ModifyCandidacy()
+    candidacy_id = request.args.get('id')
+    candidacy = Candidacy.query.filter_by(id = candidacy_id).first()
+
+    if form.validate_on_submit():
+        
+        if candidacy:
+            candidacy.contact = form.contact.data
+            candidacy.status = form.status.data
+            db.session.commit()
+
+            flash(f"La candidature a bien été modifié",category="success")
+            return redirect(url_for('board_page'))
+        else:
+            flash('Something goes wrong',category="danger")
+    return render_template('modify_candidacy.html', form=form , contact = candidacy.contact)

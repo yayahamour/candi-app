@@ -1,3 +1,4 @@
+from email.policy import default
 from App import db,login_manager
 from datetime import date
 from flask_login import UserMixin # allow to set variable is_active=True and to stay connected
@@ -33,6 +34,7 @@ class Candidacy(db.Model):
     contact = db.Column(db.String(length=50), nullable=False)
     date = db.Column(db.String(), nullable=False)
     date_retry = db.Column(db.Date(), nullable=True)
+    status = db.Column(db.String(length=20), nullable=True, default='En cours')
 
     def __repr__(self):
         return f' Candidat id : {self.user_id}, Entreprise id: {self.enterprise_id}'
