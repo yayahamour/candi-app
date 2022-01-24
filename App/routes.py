@@ -3,7 +3,7 @@ from App import db, app
 from datetime import date
 from App.request import Request
 from .models import Users, Enterprise, Candidacy
-from .forms import Login, AddCandidacy
+from .forms import Login, AddCandidacy, ModifyPassword
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
@@ -57,3 +57,20 @@ def add_candidature():
         flash('Nouvelle Candidature ajouté ', category='succes')
         return redirect(url_for('board_page'))
     return render_template('add_candidacy.html', form=form)
+
+@app.route('/modify_passsword', methods=['GET', 'POST'])
+@login_required
+def modify_password():
+    form = ModifyPassword()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(email_address=form.email.data).first()
+        if user and user.password_hash == form.current_password.data:
+            user.password_hash = form.new_password.data
+            db.session.add(user)
+            db.session.commit()
+
+            flash(f"Votre mot de passe a été modifié",category="success")
+            return redirect(url_for('board_page'))
+        else:
+            flash('Adresse email ou mot de passe invalide',category="danger")
+    return render_template('modify_password.html',form=form)
