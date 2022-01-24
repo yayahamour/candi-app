@@ -1,7 +1,7 @@
 from selenium import webdriver 
 
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome('C://webdriver/chromedriver.exe')
 
 url = 'http://candi-data.herokuapp.com/login'
 
