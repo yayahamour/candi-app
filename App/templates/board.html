@@ -52,10 +52,10 @@ Board
       </button>
   </div>
   {% endif %}
-  <div>
-    <a href="{{ url_for('modify_password') }}">
-      <button class='btn btn-primary' type="button">Modifier mot de passe</button>
-    </a>
+  <div>  
+    <button class='btn btn-lg btn-primary mt-4 d-block' id="button">
+      <a href="{{ url_for('modify_password') }}">Modifier mot de passe</a>
+    </button>
   </div>
 </section>
 {% endblock %}
