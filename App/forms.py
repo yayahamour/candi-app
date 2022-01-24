@@ -16,7 +16,7 @@ class AddCandidacy(FlaskForm):
     contact = StringField(label='Contact', validators=[DataRequired()])
     submit = SubmitField(label='Ajouter')
 
-class ModifyPassword(FlaskForm):
+class ModifyProfile(FlaskForm):
     
     email = EmailField(label="Adresse mail:", validators = [DataRequired()])
     current_password = PasswordField(label="Mot de passe actuel:", validators = [DataRequired()])
