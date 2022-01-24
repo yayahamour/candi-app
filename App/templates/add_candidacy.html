@@ -3,9 +3,9 @@
     Ajout candidature
 {% endblock %}
 {% block content%}
-<body>
+<div class='container mt-5'>
     <h1>Nouvelle Candidature</h1>
-    <form method="post" novalidate>
+    <form method="post" class="form-register">
         {{ form.hidden_tag() }}
         <p>
             {{ form.name.label }}<br>
@@ -25,6 +25,5 @@
         
         <p>{{ form.submit() }}</p>
     </form>
+</div>
 {% endblock %}
-</body>
-</html>
