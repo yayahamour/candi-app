@@ -37,7 +37,9 @@ h1{
     border-bottom: solid 1px rgba(255,255,255,0.1);
   }
   
-  
+  #button{
+    margin: 0 auto;
+  }
   /* demo styles */
   
   @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
@@ -75,7 +77,9 @@ h1{
   .made-with-love a:hover {
     text-decoration: underline;
   }
-  
+  a, a:hover{
+    color: #fff;  
+  }
   
   /* for custom scrollbar for webkit browser*/
   
