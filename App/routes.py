@@ -29,7 +29,7 @@ def login_page():
 def board_page():
     req = Request()
     if (current_user.is_admin == True):
-        return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_all_nomination())
+        return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status"],User=req.request_all_nomination())
     else:
         return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
 
@@ -58,9 +58,9 @@ def add_candidature():
         return redirect(url_for('board_page'))
     return render_template('add_candidacy.html', form=form)
 
-@app.route('/modify_passsword', methods=['GET', 'POST'])
+@app.route('/modify_profile', methods=['GET', 'POST'])
 @login_required
-def modify_password():
+def modify_profile():
     form = ModifyProfile()
     if form.validate_on_submit():
         if current_user.email_address == form.email.data and current_user.password_hash == form.current_password.data:
