@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+    Ajout candidature
+{% endblock %}
+{% block content%}
+<body>
+    <h1>Nouvelle Candidature</h1>
+    <form method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+
+        </p>
+        <p>
+            {{ form.place.label }}<br>
+            {{ form.place(size=32) }}<br>
+
+        </p>
+        <p>
+            {{ form.contact.label }}<br>
+            {{ form.contact(size=32) }}<br>
+ 
+        </p>
+        
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
+</body>
+</html>

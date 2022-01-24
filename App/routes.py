@@ -1,8 +1,9 @@
 from flask import render_template, redirect,url_for,flash
 from App import db, app
+from datetime import date
 from App.request import Request
-from .models import Users
-from .forms import Login
+from .models import Users, Enterprise, Candidacy
+from .forms import Login, AddCandidacy
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
@@ -37,3 +38,22 @@ def logout_page():
     logout_user()
     flash('Vous êtes correctement déconnecté',category="success")
     return redirect(url_for('home_page'))
+
+@app.route('/candidature', methods= ['GET', 'POST'])
+def add_candidature():
+    form = AddCandidacy()
+    date_candidacy = date.today().strftime("%d-%m-%Y")
+    if form.validate_on_submit():
+        enterprise = Enterprise.query.filter_by(name=form.name.data, place=form.place.data).first()
+        if not enterprise:
+            db.create_all()
+            enterprise1 = Enterprise(name=form.name.data, place=form.place.data)
+            db.session.add(enterprise1)
+            db.session.commit()
+        enterprise_ID = Enterprise.query.filter_by(name=form.name.data, place=form.place.data).first().id
+        new_candidature = Candidacy(contact=form.contact.data, enterprise_id = enterprise_ID,  user_id = current_user.id, date=date_candidacy)
+        db.session.add(new_candidature)
+        db.session.commit()
+        flash('Nouvelle Candidature ajouté ', category='succes')
+        return redirect(url_for('board_page'))
+    return render_template('add_candidacy.html', form=form)
