@@ -1,10 +1,10 @@
 flask
+pysqlite3
 gunicorn
 wtforms
 flask_login
 flask_sqlalchemy
 flask_wtf
-sqlite3
 urllib3==1.25.9
 Werkzeug==1.0.1
 uwsgi
