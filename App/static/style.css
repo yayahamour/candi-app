@@ -51,7 +51,9 @@ h1{
   section{
     margin: 50px;
   }
-  
+  label{
+    color:#fff;
+  }
   
   /* follow me template */
   .made-with-love {
