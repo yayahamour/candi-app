@@ -100,7 +100,6 @@ def modify_candidacy():
     
 @app.route('/delete_candidacy')
 def delete_candidacy():
-    print("bonjour")
     candidacy_id = request.args.get('id')
     Candidacy.query.filter_by(id=candidacy_id).delete()
     db.session.commit()

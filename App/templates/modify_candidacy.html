@@ -12,10 +12,10 @@
             {{ form.hidden_tag() }}
 
             {{ form.contact.label() }}
-            {{ form.contact(placeholder=contact, class="form-control") }}
+            {{ form.contact(value=contact, class="form-control") }}
             <br>
             {{ form.status.label() }}
-            {{ form.status(placeholder=status, class="form-control") }}
+            {{ form.status(value=status, class="form-control") }}
             <br>
             {{ form.submit(class="btn btn-lg btn-primary d-block", id="button")}}
         </form>
