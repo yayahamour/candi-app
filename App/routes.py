@@ -3,7 +3,7 @@ from App import db, app
 from datetime import date
 from App.request import Request
 from .models import Users, Enterprise, Candidacy
-from .forms import Login, AddCandidacy
+from .forms import Login, AddCandidacy, ModifyProfile
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
@@ -29,7 +29,7 @@ def login_page():
 def board_page():
     req = Request()
     if (current_user.is_admin == True):
-        return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_all_nomination())
+        return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status"],User=req.request_all_nomination())
     else:
         return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
 
@@ -57,3 +57,19 @@ def add_candidature():
         flash('Nouvelle Candidature ajouté ', category='succes')
         return redirect(url_for('board_page'))
     return render_template('add_candidacy.html', form=form)
+
+@app.route('/modify_profile', methods=['GET', 'POST'])
+@login_required
+def modify_profile():
+    form = ModifyProfile()
+    if form.validate_on_submit():
+        if current_user.email_address == form.email.data and current_user.password_hash == form.current_password.data:
+            current_user.password_hash = form.new_password.data
+            db.session.add(current_user)
+            db.session.commit()
+
+            flash(f"Votre mot de passe a été modifié",category="success")
+            return redirect(url_for('board_page'))
+        else:
+            flash('Adresse email ou mot de passe invalide',category="danger")
+    return render_template('modify_profile.html',form=form)
