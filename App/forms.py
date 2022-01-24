@@ -22,3 +22,10 @@ class ModifyProfile(FlaskForm):
     current_password = PasswordField(label="Mot de passe actuel:", validators = [DataRequired()])
     new_password = PasswordField(label="Nouveau mot de passe:", validators = [DataRequired()])
     submit = SubmitField(label="Valider")
+
+class ModifyCandidacy(FlaskForm):
+  
+    contact = StringField(label='Contact', validators=[DataRequired()])
+    status = StringField(label='Status', validators=[DataRequired()])
+
+    submit = SubmitField(label="Valider")
