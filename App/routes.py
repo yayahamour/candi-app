@@ -1,4 +1,4 @@
-from flask import render_template, redirect,url_for,flash
+from flask import render_template, redirect,url_for,flash,request
 from App import db, app
 from datetime import date
 from App.request import Request
@@ -31,7 +31,7 @@ def board_page():
     if (current_user.is_admin == True):
         return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status"],User=req.request_all_nomination())
     else:
-        return render_template('board.html', title = ["Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
+        return render_template('board.html', title = ["ID","Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
 
 @app.route('/logout')
 def logout_page():
@@ -43,18 +43,22 @@ def logout_page():
 def add_candidature():
     form = AddCandidacy()
     date_candidacy = date.today().strftime("%d-%m-%Y")
+    print(date_candidacy)
+    print(type(date_candidacy))
     if form.validate_on_submit():
         enterprise = Enterprise.query.filter_by(name=form.name.data, place=form.place.data).first()
-        if not enterprise:
-            db.create_all()
+        if enterprise:
+            pass
+        else:
             enterprise1 = Enterprise(name=form.name.data, place=form.place.data)
             db.session.add(enterprise1)
             db.session.commit()
         enterprise_ID = Enterprise.query.filter_by(name=form.name.data, place=form.place.data).first().id
+        print(enterprise_ID)
         new_candidature = Candidacy(contact=form.contact.data, enterprise_id = enterprise_ID,  user_id = current_user.id, date=date_candidacy)
         db.session.add(new_candidature)
         db.session.commit()
-        flash('Nouvelle Candidature ajouté ', category='succes')
+        flash('Nouvelle Candidature ajouté ', category='success')
         return redirect(url_for('board_page'))
     return render_template('add_candidacy.html', form=form)
 
@@ -73,3 +77,12 @@ def modify_profile():
         else:
             flash('Adresse email ou mot de passe invalide',category="danger")
     return render_template('modify_profile.html',form=form)
+
+@app.route('/delete_candidacy')
+def delete_candidacy():
+    print("bonjour")
+    candidacy_id = request.args.get('id')
+    Candidacy.query.filter_by(id=candidacy_id).delete()
+    db.session.commit()
+    flash("Candidature supprimé avec succés",category="success")
+    return redirect(url_for('board_page'))
