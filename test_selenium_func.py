@@ -28,7 +28,6 @@ class Selenium_test:
         assert 'Vous êtes connecté en tant que :' in flash_login.text 
         print('------------------test login user Done----------------------')
 
-
     def add_candidacy_test(test_name, contact_test):
         # Click the button add candidacy
         add_xpath = '//button[@class="btn btn-lg btn-primary mt-4 d-block"]/a'
