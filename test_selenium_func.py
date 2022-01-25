@@ -52,7 +52,7 @@ class Selenium_test:
         flash_succes_xpath = '//div[@class="alert alert-success alter-dismissable fade show"]'
         flash_succes = driver.find_element(By.XPATH, flash_succes_xpath).text
         assert 'Nouvelle Candidature ajouté' in flash_succes 
-        # Assert element is on dashboard's following place => Front test
+        # Assert element is on dashboard's following place 
         td_entreprise_xpath = '//div[@class="tbl-content"]/table/tbody/tr[3]/td[2]'
         td_entreprise = driver.find_element(By.XPATH, td_entreprise_xpath)
         assert td_entreprise.text == test_name
@@ -88,14 +88,18 @@ class Selenium_test:
         print('---------------Click to login---------------------------')
 
     def modify_candidacy():
+        # Select the XPATH and click to modify candidacy
         status_start_xpath = '//tbody/tr[3]/td[6]'
         status_start = driver.find_element(By.XPATH, status_start_xpath).text
+        # Select the Xpath field and send other status
         modify_xpath = '//tbody/tr[3]/td[7]/a[1]'
         driver.find_element(By.XPATH, modify_xpath).click()
         field_status_xpath = '//input[@id="status"]'
         driver.find_element(By.XPATH, field_status_xpath).send_keys('Accepté')
+        # Select the Xpath button to send the modification 
         validate_button_xpath = '//input[@id="button"]'
         driver.find_element(By.XPATH, validate_button_xpath).click()
+        # Assert status has been modified 
         status_end = driver.find_element(By.XPATH, status_start_xpath).text
         assert status_start != status_end
         print('----------------Test modify status Candidacy-------------')
