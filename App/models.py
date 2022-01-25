@@ -5,25 +5,23 @@ from flask_login import UserMixin # allow to set variable is_active=True and to 
 
 @login_manager.user_loader
 def load_user(user_id):
-    """[summary]
+    """Allow to create a current_user with his id
 
     Args:
-        user_id ([type]): [description]
+        user_id (int): user_id from the database
 
     Returns:
-        [type]: [description]
+        instance of users depending of his id
     """
     return Users.query.get(int(user_id))
 
 class Users(db.Model,UserMixin):
-    """[summary]
+    """Create a table Users on the candidature database
 
     Args:
-        db ([type]): [description]
-        UserMixin ([type]): [description]
+        db.Model: Generates columns for the table
+        UserMixin: Generates an easy way to provide a current_user
 
-    Returns:
-        [type]: [description]
     """
     id = db.Column(db.Integer(), primary_key=True, nullable=False, unique=True)
     last_name = db.Column(db.String(length=30), nullable=False)
@@ -37,13 +35,11 @@ class Users(db.Model,UserMixin):
         return f'{self.last_name} {self.first_name}'
 
 class Enterprise(db.Model):
-    """[summary]
+    """Create a table Enterprise on the candidature database
 
     Args:
-        db ([type]): [description]
+        db.Model: Generates columns for the table
 
-    Returns:
-        [type]: [description]
     """
     id = db.Column(db.Integer(), primary_key=True, nullable=False, unique=True)
     name = db.Column(db.String(length=50), nullable=False)
@@ -53,14 +49,13 @@ class Enterprise(db.Model):
         return f'{self.name} {self.place}'
   
 class Candidacy(db.Model):
-    """[summary]
+    """Create a table Candidacy on the candidature database
 
     Args:
-        db ([type]): [description]
+        db.Model: Generates columns for the table
 
-    Returns:
-        [type]: [description]
     """
+
     id = db.Column(db.Integer(), primary_key=True, nullable=False, unique=True)
     user_id = db.Column(db.Integer(), nullable=False)
     enterprise_id = db.Column(db.Integer(), nullable=False)
