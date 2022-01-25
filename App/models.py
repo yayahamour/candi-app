@@ -1,4 +1,4 @@
-from App import db,login_manager
+from App import db, login_manager
 from datetime import date
 from flask_login import UserMixin # allow to set variable is_active=True and to stay connected
 

@@ -1,3 +1,5 @@
+from App.models import Candidacy 
+from App import db 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep 
@@ -29,6 +31,8 @@ class Selenium_test:
 
 
     def add_candidacy_test(test_name, contact_test):
+        # Save len of candidacy 
+        nomination_enter = len(Candidacy.query.all())
         # Click the button add candidacy
         add_xpath = '//button[@class="btn btn-lg btn-primary mt-4 d-block"]/a'
         driver.find_element(By.XPATH, add_xpath).click()
@@ -54,9 +58,9 @@ class Selenium_test:
         td_entreprise_xpath = '//div[@class="tbl-content"]/table/tbody/tr[3]/td[2]'
         td_entreprise = driver.find_element(By.XPATH, td_entreprise_xpath)
         assert td_entreprise.text == test_name
-        ## Assert element is in the Database => Back test
-        # nomination = Candidacy.query.filter_by(name=test_name).first()
-        # assert nomination 
+        ## Assert element +1 in the Database 
+        nomination_exit = len(Candidacy.query.all())
+        assert len(nomination_exit) - len(nomination_enter) == 1
         print('------------------test add candidacy Done----------------------')
 
 
