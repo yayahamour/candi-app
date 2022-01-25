@@ -1,75 +1,90 @@
+from test_selenium_func import Selenium_test,  driver 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep 
 
-driver = webdriver.Chrome('C://webdriver/chromedriver.exe')
 
 url = 'https://candiapp.herokuapp.com/login'
 
 driver.get(url)
 
-print('------------------test login user1----------------------')
-#instances of xpaths
-user_xpath = "//*[@id='email']"
-password_xpath = "//*[@id='password']"
-button_click_xpath = '//*[@id="submit"]'
+# -------------------- Starting test add candidacy with 2 accounts and tchek board with admin account--------------
 
-# I use find_element(By.XPATH, 'xpath') to find element
-# And I use .send_keys('field') to enter strings in the field
-driver.find_element(By.XPATH, user_xpath).send_keys('rudy@gmail.com')
-driver.find_element(By.XPATH, password_xpath).send_keys('mdp')
-driver.find_element(By.XPATH , button_click_xpath).click()
-sleep(3)
+Selenium_test.login_test(user='florian@gmail.com', password="1234")
 
-# Assert flash connexion is ok 
-flash_login_xpath = '/html/body/div'
+# Second assert flash connexion more complete than this one in the function
+flash_login_xpath = '//div[@class="alert alert-success alter-dismissable fade show"]'
 flash_login = driver.find_element(By.XPATH , flash_login_xpath)
-assert flash_login == 'Vous êtes connecté en tant que : Rudy Bourez'
+assert 'Vous êtes connecté en tant que : Florian Abgrall' in flash_login.text 
+sleep(2)
 
-# Assert h1 field is correct 
-h1_xpath = "/html/body/section/h1"
-h1 = driver.find_element(By.XPATH , h1_xpath)
-assert h1.text == "CANDIDATURES"
+# Add candidacy with first user
+Selenium_test.add_candidacy_test(test_name="Apple", contact_test = "Steve Jobs")
+sleep(2)
 
+# logout first user
+Selenium_test.logout_test()
+sleep(2)
 
-print('------------------test add candidacy----------------------')
-add_xpath = '/html/body/section/div[3]/a/button'
-driver.find_element(By.XPATH, add_xpath).click()
-
-entreprise_field_xpath = '//*[@id="name"]'
-lieu_field_xpath = '//*[@id="place"]'
-contact_field_xpath = '//*[@id="contact"]'
-driver.find_element(By.XPATH, entreprise_field_xpath).send_keys('Apple') 
-driver.find_element(By.XPATH, lieu_field_xpath).send_keys('Toulouse') 
-driver.find_element(By.XPATH, contact_field_xpath).send_keys('Xavier') 
+# Connexion with the second user
+Selenium_test.click_login()
 sleep(1)
-add_xpath = '//*[@id="submit"]'
-driver.find_element(By.XPATH, add_xpath).click()
+Selenium_test.login_test(user='ayoub@gmail.com', password='lol')
+sleep(2)
+
+# Second assert flash connexion more complete than this one in the function
+flash_login_xpath = '//div[@class="alert alert-success alter-dismissable fade show"]'
+flash_login = driver.find_element(By.XPATH , flash_login_xpath)
+assert 'Vous êtes connecté en tant que : Ayoub Haddou' in flash_login.text
+
+# Add candidacy with the second user
+Selenium_test.add_candidacy_test(test_name="Stars wars", contact_test='Dark Vador')
+sleep(2)
+
+# Go to admin account to tchek if both posts previously added are visible
+Selenium_test.logout_test()
+sleep(2)
+Selenium_test.click_login()
+Selenium_test.login_test(user='yanis@gmail.com', password="Admin")
+sleep(2)
+
+# Cheking 
+candidacy_added_xpath = '//table/tbody/tr[2]/td[2]'
+candidacy_added_2_xpath = '//table/tbody/tr[3]/td[2]'
+candidacy_added = driver.find_element(By.XPATH, candidacy_added_xpath).text
+candidacy_added_2 = driver.find_element(By.XPATH, candidacy_added_2_xpath).text
+assert candidacy_added == 'Florian'
+assert candidacy_added_2 == 'Ayoub'
+print('--------Admin test done-------------')
+ 
+ 
+# Delete the posts previously added by user 1 and user 2 
+Selenium_test.logout_test()
+Selenium_test.click_login()
+Selenium_test.login_test(user='florian@gmail.com', password="1234")
 sleep(1)
-# Une fois la candidature soumise, je vérifie s'il apparait dans la board
-#x_path susceptible de changé. Voir pour afficher les nouvelles candidature en premiere place ? 
-td_entreprise_xpath = '/html/body/section/div[2]/table/tbody/tr[6]/td[1]'
-td_entreprise = driver.find_element(By.XPATH, td_entreprise_xpath)
-assert td_entreprise.text == "Apple"
+Selenium_test.delete_candidacy_test()
 
 
-print ('----------------Test logout---------------------------')
-logout_xpath = '//*[@id="navbar"]/div/span[2]/a'
-driver.find_element(By.XPATH, logout_xpath).click()
+
+# td_check_xpath = '//div[@class="tbl-content"]/table/tbody/tr[3]/td[7]/a[2]'
+# td_chek = driver.find_element(By.XPATH, td_check_xpath)
+# assert "Apple" not in td_chek 
+
+
+sleep(2)
+Selenium_test.logout_test()
 sleep(1)
-flash_logout_xpath = '/html/body/div'
-logout_flash = driver.find_element(By.XPATH , flash_logout_xpath)
-assert logout_flash == 'Vous êtes correctement déconnecté'
-
-print('----------------Test login with other user------------------')
-
-
-print('--------------Test admin peut voir l\'ajout de candidature----------------')
-# A faire 
+Selenium_test.click_login()
+Selenium_test.login_test(user='ayoub@gmail.com', password='lol')
+sleep(1)
+Selenium_test.delete_candidacy_test()
+sleep(2)
 
 
 
+
+Selenium_test.logout_test()
+print('------------- Test finish with sucess ---------------')
+sleep(1)
 driver.quit()
-
-# Vérifié si on peut ajouter une candidature puis la retrouver dans board
-# + A retrouver dans 
