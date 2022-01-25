@@ -1,4 +1,3 @@
-from App.models import Candidacy 
 from App import db 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -31,8 +30,6 @@ class Selenium_test:
 
 
     def add_candidacy_test(test_name, contact_test):
-        # Save len of candidacy 
-        nomination_enter = len(Candidacy.query.all())
         # Click the button add candidacy
         add_xpath = '//button[@class="btn btn-lg btn-primary mt-4 d-block"]/a'
         driver.find_element(By.XPATH, add_xpath).click()
@@ -50,6 +47,7 @@ class Selenium_test:
         # Click on the button add candidacy
         add_xpath = '//input[@id="button"]'
         driver.find_element(By.XPATH, add_xpath).click()
+        sleep(5)
         # Assert flash element added success 
         flash_succes_xpath = '//div[@class="alert alert-success alter-dismissable fade show"]'
         flash_succes = driver.find_element(By.XPATH, flash_succes_xpath).text
@@ -58,9 +56,6 @@ class Selenium_test:
         td_entreprise_xpath = '//div[@class="tbl-content"]/table/tbody/tr[3]/td[2]'
         td_entreprise = driver.find_element(By.XPATH, td_entreprise_xpath)
         assert td_entreprise.text == test_name
-        ## Assert element +1 in the Database 
-        nomination_exit = len(Candidacy.query.all())
-        assert len(nomination_exit) - len(nomination_enter) == 1
         print('------------------test add candidacy Done----------------------')
 
 
@@ -92,7 +87,16 @@ class Selenium_test:
         sleep(1)
         print('---------------Click to login---------------------------')
 
-
-
-
-    
+    def modify_candidacy():
+        status_start_xpath = '//tbody/tr[3]/td[6]'
+        status_start = driver.find_element(By.XPATH, status_start_xpath).text
+        modify_xpath = '//tbody/tr[3]/td[7]/a[1]'
+        driver.find_element(By.XPATH, modify_xpath).click()
+        field_status_xpath = '//input[@id="status"]'
+        driver.find_element(By.XPATH, field_status_xpath).send_keys('Accepté')
+        validate_button_xpath = '//input[@id="button"]'
+        driver.find_element(By.XPATH, validate_button_xpath).click()
+        status_end = driver.find_element(By.XPATH, status_start_xpath).text
+        assert status_start != status_end
+        print('----------------Test modify status Candidacy-------------')
+        

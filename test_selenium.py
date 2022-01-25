@@ -55,9 +55,8 @@ candidacy_added = driver.find_element(By.XPATH, candidacy_added_xpath).text
 candidacy_added_2 = driver.find_element(By.XPATH, candidacy_added_2_xpath).text
 assert candidacy_added == 'Florian'
 assert candidacy_added_2 == 'Ayoub'
-print('--------Admin test done-------------')
- 
- 
+print('--------Admin test done-------------') 
+
 # Delete the posts previously added by user 1 and user 2 
 Selenium_test.logout_test()
 Selenium_test.click_login()
@@ -78,6 +77,8 @@ sleep(1)
 Selenium_test.click_login()
 Selenium_test.login_test(user='ayoub@gmail.com', password='lol')
 sleep(1)
+Selenium_test.modify_candidacy()
+sleep(2)
 Selenium_test.delete_candidacy_test()
 sleep(2)
 
