@@ -65,10 +65,9 @@ sleep(1)
 Selenium_test.delete_candidacy_test()
 
 
-
-# td_check_xpath = '//div[@class="tbl-content"]/table/tbody/tr[3]/td[7]/a[2]'
+# td_check_xpath = '//div[@class="tbl-content"]/table/tbody/tr[3]/td[2]'
 # td_chek = driver.find_element(By.XPATH, td_check_xpath)
-# assert "Apple" not in td_chek 
+# assert td_chek is None 
 
 
 sleep(2)
@@ -81,8 +80,6 @@ Selenium_test.modify_candidacy()
 sleep(2)
 Selenium_test.delete_candidacy_test()
 sleep(2)
-
-
 
 
 Selenium_test.logout_test()

@@ -1,4 +1,3 @@
-from App import db 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep 
@@ -70,7 +69,7 @@ class Selenium_test:
 
     def logout_test():
         # Click on button logout 
-        logout_xpath = '//body/nav/div[@class="col-3"]/span[2]'
+        logout_xpath = '//body/nav/div[@class="col-3 text-right"]/span[2]'
         driver.find_element(By.XPATH, logout_xpath).click()
         sleep(0.25)
         #Assert flash sucess loging 
