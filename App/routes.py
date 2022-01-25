@@ -89,14 +89,14 @@ def modify_candidacy():
         
         if candidacy:
             candidacy.contact = form.contact.data
-            candidacy.status = form.status.data
+            candidacy.status = dict(form.status.choices).get(form.status.data)
             db.session.commit()
 
             flash(f"La candidature a bien été modifié",category="success")
             return redirect(url_for('board_page'))
         else:
             flash('Something goes wrong',category="danger")
-    return render_template('modify_candidacy.html', form=form , contact = candidacy.contact)
+    return render_template('modify_candidacy.html', form=form , contact = candidacy.contact, status=candidacy.status)
     
 @app.route('/delete_candidacy')
 def delete_candidacy():

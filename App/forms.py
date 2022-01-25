@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField,EmailField,SubmitField,StringField
+from wtforms import PasswordField,EmailField,SubmitField,StringField, SelectField
 from wtforms.validators import Length,DataRequired,Email,EqualTo,ValidationError
 from .models import Users
 
@@ -26,6 +26,6 @@ class ModifyProfile(FlaskForm):
 class ModifyCandidacy(FlaskForm):
   
     contact = StringField(label='Contact', validators=[DataRequired()])
-    status = StringField(label='Status', validators=[DataRequired()])
+    status = SelectField(label='Status', choices=['En cours', 'Validée', 'Refusée'], validate_choice=True, coerce=str)
 
     submit = SubmitField(label="Valider")
