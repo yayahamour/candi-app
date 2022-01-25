@@ -1,5 +1,4 @@
 from flask import render_template, redirect, url_for, flash, request
-from git import typ
 from App import db, app
 from datetime import date
 from App.request import Request
