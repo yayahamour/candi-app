@@ -127,7 +127,7 @@ def modify_candidacy():
             return redirect(url_for('board_page'))
         else:
             flash('Something goes wrong',category="danger")
-    return render_template('modify_candidacy.html', form=form , contact = candidacy.contact)
+    return render_template('modify_candidacy.html', form=form , contact = candidacy.contact, status=candidacy.status)
     
 @app.route('/delete_candidacy')
 def delete_candidacy():
