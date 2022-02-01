@@ -1,10 +1,10 @@
 from flask import render_template, redirect, url_for, flash, request
 from App import db, app
 from datetime import date
-from App.request import Request
-from .models import Users, Enterprise, Candidacy
+from .models import Users, Candidacy
 from .forms import Login, AddCandidacy, ModifyCandidacy, ModifyProfile
 from flask_login import login_user, logout_user, login_required, current_user
+from werkzeug.security import check_password_hash, generate_password_hash
 
 @app.route('/')
 @app.route('/home')
@@ -26,13 +26,16 @@ def login_page():
     form = Login()
     if form.validate_on_submit():
         user = Users.query.filter_by(email_address=form.email.data).first()
-        if user and user.password_hash == form.password.data:
+        if user and check_password_hash(user.password_hash, form.password.data):
             login_user(user)
             flash(f"Vous êtes connecté en tant que : {user.first_name} {user.last_name}",category="success")
             return redirect(url_for('board_page'))
         else:
             flash('Adresse email ou mot de passe invalide',category="danger")
     return render_template('login.html',form=form)
+
+
+
 
 @app.route('/board', methods=['GET','POST'])
 @login_required
@@ -42,11 +45,15 @@ def board_page():
     Returns:
         [str]: [board page code different if the user is admin or not]
     """
-    req = Request()
+    admin_candidacy_attributs = ["user_id",'entreprise','contact_full_name','contact_email', 'contact_mobilephone' ,'date','status']
+    usercandidacy_attributs = ['entreprise','contact_full_name','contact_email', 'contact_mobilephone' ,'date','status']
+
+
     if (current_user.is_admin == True):
-        return render_template('board.html', title = ["Nom", "Prenom","Nom Entreprise", "Ville","Contact", "Date", "Status"],User=req.request_all_nomination())
+        return render_template('board.html', title = admin_candidacy_attributs, user_candidacy=Candidacy.get_all_in_list())
     else:
-        return render_template('board.html', title = ["ID","Nom Entreprise", "Ville","Contact", "Date", "Status",""],User=req.request_nomination_by_id(current_user.id))
+        return render_template('board.html', title = usercandidacy_attributs ,user_candidacy=Candidacy.find_by_user_id(current_user.id))
+
 
 @app.route('/logout')
 def logout_page():
@@ -64,20 +71,8 @@ def add_candidature():
         [str]: [Candidacy code page]
     """
     form = AddCandidacy()
-    date_candidacy = date.today().strftime("%d-%m-%Y")
     if form.validate_on_submit():
-        enterprise = Enterprise.query.filter_by(name=form.name.data, place=form.place.data).first()
-        if enterprise:
-            pass
-        else:
-            enterprise1 = Enterprise(name=form.name.data, place=form.place.data)
-            db.session.add(enterprise1)
-            db.session.commit()
-        enterprise_ID = Enterprise.query.filter_by(name=form.name.data, place=form.place.data).first().id
-        print(enterprise_ID)
-        new_candidature = Candidacy(contact=form.contact.data, enterprise_id = enterprise_ID,  user_id = current_user.id, date=date_candidacy)
-        db.session.add(new_candidature)
-        db.session.commit()
+        Candidacy(user_id = current_user.id, entreprise = form.entreprise.data, contact_full_name = form.contact_full_name.data, contact_email = form.contact_email.data, contact_mobilephone = form.contact_mobilephone.data).save_to_db()
         flash('Nouvelle Candidature ajouté ', category='success')
         return redirect(url_for('board_page'))
     return render_template('add_candidacy.html', form=form)
@@ -92,8 +87,8 @@ def modify_profile():
     """
     form = ModifyProfile()
     if form.validate_on_submit():
-        if current_user.email_address == form.email.data and current_user.password_hash == form.current_password.data:
-            current_user.password_hash = form.new_password.data
+        if current_user.email_address == form.email.data and check_password_hash(current_user.password_hash, form.current_password.data):
+            current_user.password_hash = generate_password_hash(form.new_password.data, method='sha256')
             db.session.add(current_user)
             db.session.commit()
 
@@ -118,7 +113,9 @@ def modify_candidacy():
     if form.validate_on_submit():
         
         if candidacy:
-            candidacy.contact = form.contact.data
+            candidacy.contact_full_name = form.contact_full_name.data
+            candidacy.contact_email = form.contact_email.data
+            candidacy.contact_mobilephone = form.contact_mobilephone.data
             candidacy.status = form.status.data
             db.session.commit()
 
@@ -126,14 +123,13 @@ def modify_candidacy():
             return redirect(url_for('board_page'))
         else:
             flash('Something goes wrong',category="danger")
-    return render_template('modify_candidacy.html', form=form , contact = candidacy.contact, status=candidacy.status)
+    return render_template('modify_candidacy.html', form=form , candidacy=candidacy.json())
     
 @app.route('/delete_candidacy')
 def delete_candidacy():
     """[Allow to delete candidacy in the BDD with the id and redirect to board page]"""
 
     candidacy_id = request.args.get('id')
-    Candidacy.query.filter_by(id=candidacy_id).delete()
-    db.session.commit()
+    Candidacy.query.filter_by(id=candidacy_id).first().delete_from_db()
     flash("Candidature supprimé avec succés",category="success")
     return redirect(url_for('board_page'))

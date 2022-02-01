@@ -14,9 +14,10 @@ class Login(FlaskForm):
 class AddCandidacy(FlaskForm):
     """[Form to add candidacy]
     """
-    name = StringField(label='Entreprise', validators=[DataRequired()])
-    place = StringField(label='Lieu', validators=[DataRequired()])
-    contact = StringField(label='Contact', validators=[DataRequired()])
+    entreprise = StringField(label='Entreprise', validators=[DataRequired()])
+    contact_full_name = StringField(label='contact_full_name', validators=[DataRequired()])
+    contact_email = StringField(label='contact_email', validators=[DataRequired()])
+    contact_mobilephone = StringField(label='contact_mobilephone')
     submit = SubmitField(label='Ajouter')
 
 class ModifyProfile(FlaskForm):
@@ -30,7 +31,9 @@ class ModifyProfile(FlaskForm):
 class ModifyCandidacy(FlaskForm):
     """[form to modify candidacy]
     """
-    contact = StringField(label='Contact', validators=[DataRequired()])
+    contact_full_name = StringField(label='contact_full_name', validators=[DataRequired()])
+    contact_email = StringField(label='contact_email', validators=[DataRequired()])
+    contact_mobilephone = StringField(label='contact_mobilephone')
     status = StringField(label='Status', validators=[DataRequired()])
 
     submit = SubmitField(label="Valider")
