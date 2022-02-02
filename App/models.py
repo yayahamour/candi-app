@@ -99,10 +99,10 @@ class Candidacy(db.Model):
         return candidacy_list
 
     @classmethod
-    def get_all_in_list(cls):
+    def get_all_in_list_with_user_name(cls):
         candidacy_list=[]
-        for candidacy in cls.query.all():
-            candidacy_list.append(candidacy.json())
+        for candidacy in cls.query.join(Users).with_entities(Users.first_name,cls.entreprise, cls.contact_full_name, cls.contact_email, cls.contact_mobilephone,cls.date,cls.status).all():
+            candidacy_list.append(candidacy)
         return candidacy_list
 
     def save_to_db(self):
