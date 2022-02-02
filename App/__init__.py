@@ -14,3 +14,6 @@ from App import routes
 from App import models
 
 models.init_db()
+
+def getApp():
+    return app
