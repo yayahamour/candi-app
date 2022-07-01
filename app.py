@@ -11,7 +11,6 @@ if __name__ == '__main__':
     connection_string='InstrumentationKey=00000000-0000-0000-0000-000000000000')
 )
     logger.warning("Sucesss")
-   
 
     app.run(host='0.0.0.0', port=8000, debug=True)
 
