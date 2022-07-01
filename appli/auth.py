@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from flask_login import current_user, login_user, login_required, logout_user
 from flask_principal import Identity, AnonymousIdentity, identity_changed
-from app import db, app
+from appli import db, app
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
