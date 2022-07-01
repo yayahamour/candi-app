@@ -32,7 +32,7 @@ jobs:
         
       - name: Tests unitaires
         env: 
-          CONNEXION_STRING: ${{ secrets.CONNEXION_STRING }}
+          CONNEXION_STRING: ${{ secrets.CONNECTION_STRING }}
           SQLALCHEMY_DATABASE_URI: ${{ secrets.SQLALCHEMY_DATABASE_URI }}
           SQLALCHEMY_TRACK_MODIFICATIONS: ${{ secrets.SQLALCHEMY_TRACK_MODIFICATIONS }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
