@@ -12,7 +12,6 @@ if __name__ == '__main__':
     connection_string='InstrumentationKey=00000000-0000-0000-0000-000000000000')
 )
     logger.warning("Sucesss")
-    assert 1 == 0
     sentry_sdk.init(
         dsn="https://432bbda901094e48b34d4c6a51c6a28b@o1298037.ingest.sentry.io/6527720",
 
