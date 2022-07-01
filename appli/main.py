@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from app import logger
+from appli import logger
 
 main =  Blueprint("main", __name__)
 

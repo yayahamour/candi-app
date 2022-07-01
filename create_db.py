@@ -1,5 +1,5 @@
-from app import db, app
-from app.models import User, Role
+from appli import db, app
+from appli.models import User, Role
 from werkzeug.security import generate_password_hash
 
 app.app_context().push()
